@@ -1,0 +1,936 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Noahkosmetik Sheets</title>
+<meta name="theme-color" content="#a67c52">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Noah SOPs">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=Marcellus&display=swap">
+<style>
+/* Layout: ein ruhiger Lesestreifen. SOPs mit Kopfblock, Start mit Gruppen nach Rhythmus,
+   Einarbeitung als Matrix und als Einzelansicht pro Person.
+   Look folgt der Noahkosmetik Website: warmes Hellgrau, Goldbraun, leichte Schrift. */
+:root {
+  --bg: #eae8e4;
+  --surface: #f3f1ed;
+  --ink: #2b2622;
+  --muted: #6f6962;
+  --gold: #8f6a40;
+  --gold-fill: #a67c52;
+  --on-gold: #ffffff;
+  --line: #d2cdc5;
+  --gap-bg: #f3e1c4;
+  --gap-fg: #7d4510;
+  --font-display: "Marcellus", "Optima", "Palatino Linotype", Georgia, serif;
+  --font-body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1d1a17;
+    --surface: #26221e;
+    --ink: #ece6dd;
+    --muted: #a49c92;
+    --gold: #d2a978;
+    --gold-fill: #c39a6a;
+    --on-gold: #1d1a17;
+    --line: #3b352f;
+    --gap-bg: #4a3a22;
+    --gap-fg: #f0c98e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1d1a17;
+  --surface: #26221e;
+  --ink: #ece6dd;
+  --muted: #a49c92;
+  --gold: #d2a978;
+  --gold-fill: #c39a6a;
+  --on-gold: #1d1a17;
+  --line: #3b352f;
+  --gap-bg: #4a3a22;
+  --gap-fg: #f0c98e;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.5;
+}
+a { color: inherit; }
+button, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--gold-fill); outline-offset: 2px; }
+
+.wrap {
+  max-width: 820px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 56px;
+}
+
+/* Kopf */
+.top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.mark { font-size: 30px; font-weight: 300; letter-spacing: -0.015em; text-decoration: none; }
+.top small { color: var(--muted); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; }
+.nav { display: flex; gap: 8px; margin-top: 16px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+.nav a, .pills a {
+  flex: 0 0 auto; min-width: 44px; height: 44px; padding: 0 14px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--line); border-radius: 22px; text-decoration: none;
+  font-size: 15px; color: var(--muted);
+}
+.nav a[aria-current="page"], .pills a[aria-current="page"] { background: var(--gold-fill); border-color: var(--gold-fill); color: var(--on-gold); font-weight: 500; }
+.pills { display: flex; gap: 8px; margin: 4px 0 20px; overflow-x: auto; padding-bottom: 6px; }
+
+h1 { font-family: var(--font-display); font-weight: 400; color: var(--gold); font-size: clamp(30px, 6vw, 44px); line-height: 1.12; margin: 36px 0 12px; text-wrap: balance; }
+h2.sec { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 28px 0 12px; }
+.lead { color: var(--muted); max-width: 62ch; margin: 0 0 8px; font-weight: 300; }
+.team { margin: 0 0 28px; font-size: 15px; }
+.team b { font-weight: 500; }
+.eyebrow { margin: 32px 0 0; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.eyebrow + h1 { margin-top: 6px; }
+
+/* Start */
+.start { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 6px 16px; margin: 0 0 8px; }
+.start-row { display: grid; grid-template-columns: 96px 1fr; gap: 4px 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.start-row:last-child { border-bottom: 0; }
+.start-row .when { font-family: var(--font-display); color: var(--gold); font-size: 19px; }
+.start-row p { margin: 0 0 6px; font-size: 15.5px; }
+.start-row .links { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 15px; }
+.start-row .links a { min-height: 32px; display: inline-flex; align-items: center; color: var(--gold); }
+.hint { font-size: 14px; color: var(--muted); margin: 6px 0 0; }
+.group-title { font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 32px 0 8px; }
+.list { border-top: 1px solid var(--line); }
+.row {
+  display: grid; grid-template-columns: 64px 1fr auto; align-items: center; gap: 4px 12px;
+  padding: 16px 4px; min-height: 64px; border-bottom: 1px solid var(--line); text-decoration: none;
+}
+.row:hover { background: var(--surface); }
+.row .no { font-family: var(--font-display); font-size: 22px; color: var(--gold); line-height: 1; white-space: nowrap; }
+.row .ttl { font-size: 18px; }
+.row .meta { font-size: 14px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+.row .meta.warn { color: var(--gap-fg); font-weight: 500; }
+
+/* SOP Kopfblock */
+.meta-block { display: grid; grid-template-columns: 1fr 1fr; gap: 0 28px; margin: 16px 0 8px; border-top: 1px solid var(--line); }
+.mrow { padding: 12px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.mrow:first-child { grid-column: 1 / -1; }
+.mrow dt { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.mrow dd { margin: 0; font-size: 16px; overflow-wrap: anywhere; }
+.see { font-size: 15px; margin: 24px 0 0; color: var(--muted); }
+.see a { color: var(--gold); }
+
+.progress { display: flex; align-items: center; gap: 12px; margin: 0 0 16px; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.bar { flex: 1; height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--gold-fill); }
+.reset { border: 1px solid var(--line); background: transparent; border-radius: 20px; min-height: 44px; padding: 0 16px; cursor: pointer; color: var(--muted); font-size: 14px; }
+.reset:hover { background: var(--surface); }
+
+ol.steps, ul.subs { list-style: none; margin: 0; padding: 0; }
+.step { display: grid; grid-template-columns: 34px 1fr; gap: 0 4px; margin-bottom: 10px; }
+.step > .n { font-family: var(--font-display); color: var(--gold); font-size: 22px; line-height: 44px; }
+.step .body { min-width: 0; }
+.chk {
+  display: flex; align-items: flex-start; gap: 14px; width: 100%; text-align: left; cursor: pointer;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 11px 14px; min-height: 44px;
+}
+.chk .box {
+  flex: 0 0 22px; width: 22px; height: 22px; margin-top: 1px; border: 1.5px solid var(--muted); border-radius: 50%;
+  display: grid; place-items: center; color: transparent;
+}
+.chk .box svg { width: 13px; height: 13px; }
+.chk[aria-checked="true"] .box { background: var(--gold-fill); border-color: var(--gold-fill); color: var(--on-gold); }
+.chk[aria-checked="true"] .txt { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line); }
+.txt { min-width: 0; overflow-wrap: anywhere; }
+.head { font-weight: 500; padding: 10px 2px 8px; overflow-wrap: anywhere; }
+ul.subs { display: grid; gap: 8px; margin: 0 0 4px 0; }
+.read { padding: 10px 2px 8px; overflow-wrap: anywhere; }
+ul.bul { margin: 8px 0 4px; padding-left: 20px; display: grid; gap: 8px; }
+ul.bul li::marker { color: var(--gold); }
+
+.gap {
+  display: inline-block; background: var(--gap-bg); color: var(--gap-fg); border-radius: 6px;
+  padding: 0 8px; font-size: 14px; font-weight: 500; line-height: 1.6; margin: 0 2px;
+}
+
+.pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+.pager a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border: 1px solid var(--line); border-radius: 22px; text-decoration: none; font-size: 15px; }
+.pager a:hover { background: var(--surface); }
+
+/* Einarbeitung: Matrix */
+.status { font-size: 14px; color: var(--muted); margin: 0 0 12px; }
+.status b { font-weight: 500; color: var(--ink); }
+.rule { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 12px 14px; margin: 0 0 16px; font-size: 15px; }
+.rule b { font-weight: 500; }
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table.grid { border-collapse: collapse; width: 100%; min-width: 0; font-size: 15px; }
+.grid th, .grid td { border-bottom: 1px solid var(--line); padding: 0; }
+.grid tr:last-child td { border-bottom: 0; }
+.grid thead th { padding: 12px 0 10px; font-weight: 500; font-size: 12.5px; text-align: center; vertical-align: bottom; }
+.grid thead th a { text-decoration: none; }
+.grid thead th small { display: block; font-weight: 300; color: var(--muted); font-variant-numeric: tabular-nums; }
+.grid th.item, .grid td.item { text-align: left; padding: 10px 4px 10px 10px; min-width: 0; font-size: 13px; font-weight: 400; overflow-wrap: normal; word-break: normal; }
+.grid tr.group td { background: var(--bg); font-weight: 500; padding: 10px 12px; color: var(--gold); font-size: 14px; }
+.mcell { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 52px; min-width: 44px; padding: 4px 0; text-decoration: none; }
+.mcell:hover .sym { border-color: var(--gold-fill); }
+.mcell .date { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; min-height: 13px; }
+.sym { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 600; border: 1.5px solid var(--muted); color: transparent; }
+.sym svg { width: 14px; height: 14px; }
+.sym.done { background: var(--gold-fill); border-color: var(--gold-fill); color: var(--on-gold); }
+.sym.plan { border: 2px dashed var(--gold-fill); }
+.sym.miss { background: var(--gap-bg); border-color: var(--gap-bg); color: var(--gap-fg); }
+.sym.late { border: 2px solid var(--gap-fg); color: var(--gap-fg); }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); margin: 12px 0 0; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend .sym { width: 16px; height: 16px; font-size: 10px; border-width: 1.5px; }
+.legend .sym svg { width: 10px; height: 10px; }
+ul.sums { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 4px; border-top: 1px solid var(--line); }
+ul.sums li { border-bottom: 1px solid var(--line); }
+ul.sums a { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 12px 4px; min-height: 48px; text-decoration: none; font-size: 15px; }
+ul.sums a:hover { background: var(--surface); }
+ul.sums b { font-weight: 500; min-width: 64px; }
+ul.sums .num { color: var(--muted); }
+
+/* Einarbeitung: Person */
+ul.eins { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.einrow { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: 12px 14px; display: grid; gap: 10px; }
+.einrow.warn { border-color: var(--gap-fg); }
+.einhead { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.einlabel { font-weight: 500; }
+.flags { display: contents; }
+.dateline input[type="text"] { flex: 1 1 160px; min-width: 0; }
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; background: var(--bg); }
+.seg button { min-height: 44px; border: 0; background: transparent; cursor: pointer; font-size: 15px; color: var(--muted); }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--gold-fill); color: var(--on-gold); font-weight: 500; }
+.dateline { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; font-size: 14px; color: var(--muted); }
+.dateline input { min-height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--ink); font-size: 16px; }
+
+.pin-form { display: grid; gap: 12px; max-width: 360px; margin-top: 20px; }
+.pin-form label { font-size: 14px; color: var(--muted); }
+.pin-form input[type="password"], .pin-form input[type="text"] { min-height: 48px; padding: 0 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); font-size: 18px; letter-spacing: 0.06em; }
+.pin-form .remember { display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 15px; color: var(--ink); }
+.pin-form .remember input { width: 22px; height: 22px; accent-color: var(--gold-fill); }
+.pin-error { margin: 0; padding: 10px 12px; border-radius: 8px; background: var(--gap-bg); color: var(--gap-fg); font-size: 15px; font-weight: 500; }
+.btn { min-height: 48px; padding: 0 22px; border: 0; border-radius: 24px; background: var(--gold-fill); color: var(--on-gold); font-size: 16px; font-weight: 500; cursor: pointer; justify-self: start; }
+.linkbtn { border: 0; background: none; padding: 0 4px; min-height: 32px; color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 14px; }
+.toast {
+  position: fixed; left: 0; right: 0; bottom: 0; display: flex; justify-content: center;
+  padding: 0 max(16px, env(safe-area-inset-right, 0px)) calc(16px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  pointer-events: none;
+}
+.toast div { background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 10px; font-size: 15px; max-width: 520px; }
+
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .meta-block { grid-template-columns: 1fr; }
+  .row { grid-template-columns: 56px 1fr; }
+  .row .meta { grid-column: 2; text-align: left; }
+  .step { grid-template-columns: 26px 1fr; }
+  .start-row { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .chk, .reset, .row, .seg button { transition: background-color .15s ease, border-color .15s ease; }
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<div class="toast" id="toast" aria-live="polite"></div>
+
+<script src="config.js"></script>
+<script>
+(function () {
+  var TEAM = ['Mehtap', 'Ella', 'Selena', 'Selma'];
+  var KEYS = TEAM.map(function (n) { return n.toLowerCase(); });
+  var STAND = '05.11.2026';
+
+  /* ---------- SOP Inhalte ---------- */
+  var SOPS = [
+    { n: 1, title: 'Ambiente Check', check: true,
+      zweck: 'Das Haus ist bereit für die Gäste. Musik, Licht, WC, Flyer und Spiegel sind eingerichtet.',
+      wann: 'Zu Schichtbeginn', systeme: 'Playlist "Drop in the Ocean"', wer: '[Verantwortliche Person ergänzen]',
+      steps: [
+        { t: 'Musik an', subs: [
+          'Deep House oder Lounge auf der Fläche, Playlist "Drop in the Ocean" (läuft automatisch von 8 bis 19 Uhr im Flur)',
+          'Spa Musik im Zimmer (Ambient, überall)' ] },
+        { t: 'Lichter an' },
+        { t: 'WC prüfen: sauber? Handtücher aufgefüllt, Seife und Handcreme da' },
+        { t: 'Flyer sind aufgefüllt' },
+        { t: 'Spiegel zeigen das aktuelle Angebot' }
+      ] },
+    { n: 2, title: 'Bestellungen bei Shopify checken', check: true,
+      zweck: 'Offene Online Bestellungen packen, etikettieren und versandfertig machen.',
+      wann: 'Frühschicht', systeme: 'Shopify App, DHL, Labellife, Etikettendrucker', wer: '[Verantwortliche Person ergänzen]',
+      siehe: [{ n: 4, text: 'SOP 04 Bestellungen' }],
+      steps: [
+        { t: 'Grünes Shopify Symbol drücken' },
+        { t: 'Bestellungen auswählen' },
+        { t: 'Produkte raussuchen. Wenn etwas nicht verfügbar ist, nachbestellen (siehe SOP 04 Bestellungen).' },
+        { t: 'Passendes Paketformat auswählen' },
+        { t: 'Wenn alles vorhanden ist, offene Bestellungen in der Shopify App ausführen' },
+        { t: 'Etiketten über DHL kaufen' },
+        { t: 'In Labellife öffnen' },
+        { t: 'Über den Etikettendrucker drucken' },
+        { t: 'Foto vom offenen Paket mit Ware und Lieferschein machen' },
+        { t: "Papier d'Arménie, Grußkarten und Gummibärchen mitgeben" },
+        { t: 'Paket zumachen und Etikett aufkleben' },
+        { t: 'Verantwortliche Person für den Versand bestimmen' }
+      ] },
+    { n: 3, title: 'Work und Termine organisieren', check: false,
+      zweck: 'Termine realistisch planen und freie Zeit sinnvoll nutzen.',
+      wann: 'Laufend, bei jeder Terminplanung', systeme: 'Kalender, E-Mail, Glitzerhandy, Instagram', wer: '[Verantwortliche Person ergänzen]',
+      steps: [
+        { t: 'Wir sind im Premium Segment. Nehmt euch realistische Zeitrahmen. Orientierung sind 6 Termine am Tag und 900 € oder mehr Ziel pro Arbeitstag pro Person.' },
+        { t: 'Prüft, ob die gebuchte Zeit Sinn ergibt. 90 Minuten für eine Behandlung können zu viel sein. 30 Minuten oder eine doppelte Besetzung können zu wenig sein.' },
+        { t: 'Doppelbuchungen sind nur erlaubt, wenn eine Hilfsschicht an eine Person vergeben wurde. Es gibt keine spontane Vergabe von Aufgaben im laufenden Betrieb.' },
+        { t: 'Wenn keine Termine anstehen, nutzt die Zeit sinnvoll.', subs: [
+          'Handlungsfähigkeit und Instandhaltung, zum Beispiel Zimmer aufräumen, Schränke sortieren oder eure individuellen Rollen und Verbindlichkeiten wie Warenwirtschaft und Bestellungen',
+          'Neue Termine und Umsatz generieren, zum Beispiel Behandlungen oder Produkte mit Fjolla auf Instagram bewerben, E-Mails und Glitzerhandy checken, oben in der Praxis mitlaufen und Termine machen' ] },
+        { t: 'Ihr seid ein Team und werdet als Team bewertet. Trotzdem organisiert ihr euch individuell und realistisch und grenzt eure Verantwortlichkeiten ab.' }
+      ] },
+    { n: 4, title: 'Bestellungen', check: false,
+      zweck: 'Bestellungen gebündelt einmal pro Woche auslösen.',
+      wann: 'Jeden Donnerstag, 1,5 Stunden im Kalender blocken', systeme: 'Teams bei Noahkosmetik, Bereich "Bestellungen"', wer: '[Verantwortliche Person ergänzen]',
+      steps: [
+        { t: 'Bestellungen werden gesammelt und einmal die Woche am Donnerstag durchgeführt.' },
+        { t: 'Die verantwortliche Person blockt dafür die nötige Zeit im Kalender (1,5 Stunden sollten passen).' },
+        { t: 'Keine Bestellungen über Privathandys. Alle Nummern und Kontakte stehen in Teams bei Noahkosmetik unter "Bestellungen".' },
+        { t: 'Bei Paketen oder Vorratsreservierungen [Regel ergänzen]' }
+      ] },
+    { n: 5, title: 'Ware annehmen', check: true,
+      zweck: 'Lieferungen annehmen, mit dem Lieferschein abgleichen und Abweichungen melden.',
+      wann: 'Bei jeder Lieferung', systeme: 'Clinicore, Wäschezimmer, Altpapier am Parkplatz', wer: '[Verantwortliche Person ergänzen]',
+      steps: [
+        { t: 'Paket annehmen und ins Wäschezimmer bringen' },
+        { t: 'Zeitfenster bei Clinicore blocken' },
+        { t: 'Im Zeitfenster das Paket auspacken' },
+        { t: 'Ware zählen und gegen den Lieferschein prüfen', subs: [
+          'Wenn alles stimmt, weiter mit Schritt 5',
+          'Wenn etwas fehlt oder fehlerhaft ist, Mail an [Mailadresse ergänzen]' ] },
+        { t: 'Freiware separieren' },
+        { t: 'Kartons zum Altpapier (Parkplatz, wegen des Schlüssels Mehtap oder Claudia fragen)' }
+      ] },
+    { n: 6, title: 'Wäsche', check: true,
+      zweck: 'Wäsche sortieren und verteilen, damit Bad und Zimmer versorgt sind.',
+      wann: '[Zeitpunkt ergänzen]', systeme: 'Wäschezimmer', wer: '[Verantwortliche Person ergänzen]',
+      steps: [
+        { t: 'Wäschezimmer checken' },
+        { t: 'Handtücher zusammenlegen' },
+        { t: 'Weiße Handtücher zusammenrollen und ins Bad legen' },
+        { t: 'Graue Handtücher auf die Zimmer verteilen' },
+        { t: 'Schichtende [Aufgaben ergänzen]' }
+      ] }
+  ];
+
+  var GROUPS = [
+    { title: 'Schichtstart und Schichtende', ids: [1, 2, 6] },
+    { title: 'Im Tagesbetrieb', ids: [3, 5] },
+    { title: 'Wöchentlich', ids: [4] },
+    { title: 'Einarbeitung', ids: [7] }
+  ];
+
+  /* ---------- Einarbeitung ---------- */
+  function mk(prefix, labels, ext, group) {
+    return labels.map(function (l, i) { return { id: prefix + (i + 1), label: l, ext: ext, who: !ext, group: group }; });
+  }
+  var EIN_GROUPS = [
+    { title: 'Intern im Team', note: 'Einarbeitung im Haus durch eine Kollegin oder einen Kollegen. Lege immer fest, durch wen.', ext: false, items: mk('i', ['Kasse', 'Shopify', 'Tagesablauf', 'Sauberkeit', 'Datenschutz', 'Warenwirtschaft', 'Kaffeemaschine'], false) },
+    { title: 'Externe Schulung Geräte', note: 'Schulung durch die Firma des Geräts', ext: true, items: mk('g', ['Hydrafacial', 'Jetpeel', 'Potenza', 'Morpheus8', 'Aquafacial', 'Microneedling', 'Haarentfernung', 'CO2 Laser'], true) },
+    { title: 'Externe Schulung Produkte', note: 'Verkauf und Behandlung, Schulung durch die Marke', ext: true, items: mk('p', ['Noon', 'ZO', 'Teoxane', 'Skinceuticals', 'Dr. Emi'], true) }
+  ];
+  var EIN_ITEMS = [];
+  EIN_GROUPS.forEach(function (g) { g.items.forEach(function (it) { EIN_ITEMS.push(it); }); });
+
+  /* ---------- Hilfen ---------- */
+  function h(tag, attrs) {
+    var e = document.createElement(tag);
+    var a = attrs || {};
+    Object.keys(a).forEach(function (k) {
+      var v = a[k];
+      if (k === 'class') e.className = v;
+      else if (k.indexOf('on') === 0) e.addEventListener(k.slice(2), v);
+      else if (v === true) e.setAttribute(k, '');
+      else if (v !== false && v != null) e.setAttribute(k, v);
+    });
+    for (var i = 2; i < arguments.length; i++) {
+      var kids = [].concat(arguments[i]);
+      for (var j = 0; j < kids.length; j++) {
+        var c = kids[j];
+        if (c == null || c === false) continue;
+        e.append(c.nodeType ? c : document.createTextNode(c));
+      }
+    }
+    return e;
+  }
+  function rich(text) {
+    var out = [];
+    text.split(/(\[[^\]]+\])/).forEach(function (p) {
+      if (!p) return;
+      var m = p.match(/^\[([^\]]+)\]$/);
+      out.push(m ? h('span', { class: 'gap' }, 'offen: ' + m[1]) : p);
+    });
+    return out;
+  }
+  var CHECK_SVG = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3.2 3.2L13 4.8"/></svg>';
+  function checkIcon() { var s = document.createElement('span'); s.innerHTML = CHECK_SVG; return s.firstChild; }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function today() { var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function fmt(iso) { var p = String(iso || '').split('-'); return p.length === 3 ? p[2] + '.' + p[1] + '.' : ''; }
+  function fmtLong(iso) { var p = String(iso || '').split('-'); return p.length === 3 ? p[2] + '.' + p[1] + '.' + p[0] : ''; }
+  function sopNo(n) { return 'SOP ' + pad(n); }
+
+  var toastTimer = null;
+  function toast(msg) {
+    var box = document.getElementById('toast');
+    box.replaceChildren(h('div', null, msg));
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { box.replaceChildren(); }, 4500);
+  }
+
+  /* ---------- Speicher ---------- */
+  var mem = {};
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return mem[k] || null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { mem[k] = v; } }
+  function lsParse(k, fallback) { try { var v = JSON.parse(lsGet(k)); return v && typeof v === 'object' ? v : fallback; } catch (e) { return fallback; } }
+
+  var CHECK_KEY = 'nk-checks-' + today();
+  var checks = lsParse(CHECK_KEY, {});
+
+  function normalize(obj) {
+    var out = {};
+    Object.keys(obj || {}).forEach(function (id) {
+      var v = obj[id];
+      if (typeof v === 'string') out[id] = { s: 'done', d: v };
+      else if (v && (v.s === 'done' || v.s === 'planned' || v.s === 'none')) {
+        var by = typeof v.by === 'string' ? v.by : '';
+        if (v.s !== 'none' || by) out[id] = { s: v.s, d: typeof v.d === 'string' ? v.d : '', by: by };
+      }
+    });
+    return out;
+  }
+  var prog = {};
+  (function () {
+    var saved = lsParse('nk-einarbeitung-v2', {});
+    KEYS.forEach(function (k) { prog[k] = normalize(saved[k]); });
+  })();
+
+  /* ---------- Team Speicher (Supabase) ---------- */
+  var CFG = window.NK_CONFIG || {};
+  var API = String(CFG.apiUrl || '').trim();
+  var POLL_MS = (Number(CFG.pollSeconds) > 0 ? Number(CFG.pollSeconds) : 15) * 1000;
+  var configured = (/^https:\/\//.test(API) || /^http:\/\/localhost[:\/]/.test(API)) && API.indexOf('DEIN-PROJEKT') < 0;
+  var dbState = configured ? 'locked' : 'local'; // local, locked, loading, error, live
+  var stale = false;
+  var pin = '';
+  var pinError = '';
+  var pending = 0;
+  var chain = {};
+  var pollTimer = null;
+
+  // Ohne eingerichtete Verbindung speichert die Seite nur auf diesem Gerät.
+  function persistLocal() { if (!configured) lsSet('nk-einarbeitung-v2', JSON.stringify(prog)); }
+
+  function api(body) {
+    return fetch(API, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-team-pin': pin },
+      body: JSON.stringify(body)
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok) { var e = new Error(j.error || 'http'); e.code = j.error || String(r.status); throw e; }
+        return j;
+      });
+    });
+  }
+
+  function applyRows(rows) {
+    var next = {};
+    KEYS.forEach(function (k) { next[k] = {}; });
+    (rows || []).forEach(function (r) {
+      if (!next[r.person]) return;
+      next[r.person][r.item] = { s: r.status, d: r.on_date || '', by: r.by_person || '' };
+    });
+    KEYS.forEach(function (k) { prog[k] = normalize(next[k]); });
+  }
+
+  function lock() {
+    pin = '';
+    lsSet('nk-pin', '');
+    stopPoll();
+    dbState = 'locked';
+    stale = false;
+    KEYS.forEach(function (k) { prog[k] = {}; });
+    render();
+  }
+
+  function handleErr(e) {
+    var code = e && e.code;
+    if (code === 'pin' || code === 'locked') {
+      pinError = code === 'locked' ? 'Zu viele Versuche. Bitte warte 15 Minuten.' : 'Der PIN stimmt nicht.';
+      lock();
+      return;
+    }
+    if (dbState === 'live') { stale = true; softRender(); }
+    else { dbState = 'error'; render(); }
+  }
+
+  function unlock(p, remember) {
+    pin = p;
+    dbState = 'loading';
+    pinError = '';
+    render();
+    api({ action: 'list' }).then(function (j) {
+      lsSet('nk-pin', remember ? p : '');
+      applyRows(j.items);
+      stale = false;
+      dbState = 'live';
+      render();
+      startPoll();
+    }, handleErr);
+  }
+
+  function load() {
+    if (pending > 0 || dbState !== 'live') return;
+    api({ action: 'list' }).then(function (j) {
+      if (pending > 0) return;
+      var before = JSON.stringify(prog);
+      var wasStale = stale;
+      applyRows(j.items);
+      stale = false;
+      if (wasStale || JSON.stringify(prog) !== before) softRender();
+    }, handleErr);
+  }
+  function startPoll() {
+    stopPoll();
+    pollTimer = setInterval(function () { if (document.visibilityState === 'visible') load(); }, POLL_MS);
+  }
+  function stopPoll() { if (pollTimer) { clearInterval(pollTimer); pollTimer = null; } }
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') load(); });
+
+  function save(key, id) {
+    if (!configured) { persistLocal(); return; }
+    var ck = key + ':' + id;
+    pending++;
+    chain[ck] = (chain[ck] || Promise.resolve()).then(function () {
+      var rec = (prog[key] || {})[id];
+      return api({ action: 'set', person: key, item: id, status: rec ? rec.s : 'none', date: rec ? rec.d : '', by: rec ? rec.by || '' : '' });
+    }).then(function () { pending--; }, function (e) {
+      pending--;
+      if (e && (e.code === 'pin' || e.code === 'locked')) handleErr(e);
+      else toast('Die Änderung konnte nicht gespeichert werden. Prüfe die Verbindung und versuche es erneut.');
+    });
+  }
+
+  /* ---------- Zählen ---------- */
+  function leaves(sop) {
+    var ids = [];
+    sop.steps.forEach(function (s, i) {
+      if (s.subs) s.subs.forEach(function (_, j) { ids.push(i + '.' + j); });
+      else ids.push(String(i));
+    });
+    return ids;
+  }
+  function sopDone(sop) { return leaves(sop).filter(function (id) { return checks[sop.n + ':' + id]; }).length; }
+
+  function st(key, it) {
+    var r = (prog[key] || {})[it.id];
+    var s = r ? r.s : 'none';
+    var d = r ? r.d : '';
+    var by = r && r.by ? r.by : '';
+    return {
+      s: s, d: d, by: by,
+      missing: it.ext && (s === 'none' || (s === 'planned' && !d)),
+      noWho: !!it.who && !by,
+      overdue: s === 'planned' && !!d && d < today()
+    };
+  }
+  function counts(key) {
+    var c = { done: 0, planned: 0, missing: 0, overdue: 0, noWho: 0, total: EIN_ITEMS.length };
+    EIN_ITEMS.forEach(function (it) {
+      var s = st(key, it);
+      if (s.s === 'done') c.done++;
+      if (s.s === 'planned' && s.d) c.planned++;
+      if (s.missing) c.missing++;
+      if (s.noWho) c.noWho++;
+      if (s.overdue) c.overdue++;
+    });
+    return c;
+  }
+  function teamMissing() { return KEYS.reduce(function (a, k) { var c = counts(k); return a + c.missing + c.noWho; }, 0); }
+
+  /* ---------- Routing ---------- */
+  function route() {
+    var hsh = location.hash.replace('#', '');
+    var m = hsh.match(/^sheet-([1-6])$/);
+    if (m) return { v: 'sop', n: +m[1] };
+    if (hsh === 'einarbeitung') return { v: 'ein' };
+    m = hsh.match(/^einarbeitung-([a-z]+)$/);
+    if (m && KEYS.indexOf(m[1]) >= 0) return { v: 'person', key: m[1] };
+    return { v: 'home' };
+  }
+  function hrefFor(n) { return n === 7 ? '#einarbeitung' : '#sheet-' + n; }
+  function link(href, text) { return h('a', { href: href }, text); }
+
+  /* ---------- Gemeinsame Teile ---------- */
+  function header(r) {
+    var cur = r.v === 'home' ? 0 : r.v === 'sop' ? r.n : 7;
+    var links = [h('a', { href: '#', 'aria-current': cur === 0 ? 'page' : null }, 'Start')];
+    for (var n = 1; n <= 7; n++) {
+      var title = n === 7 ? 'Einarbeitungsbogen' : SOPS[n - 1].title;
+      links.push(h('a', { href: hrefFor(n), 'aria-label': (n === 7 ? '' : sopNo(n) + ', ') + title, 'aria-current': cur === n ? 'page' : null }, String(n)));
+    }
+    return h('header', null,
+      h('div', { class: 'top' }, h('a', { class: 'mark', href: '#' }, 'Noahkosmetik'), h('small', null, 'SOPs für das Team')),
+      h('nav', { class: 'nav', 'aria-label': 'Anweisungen' }, links));
+  }
+
+  function pager(prev, next) {
+    return h('div', { class: 'pager' },
+      prev ? h('a', { href: prev[0] }, prev[1]) : h('span'),
+      next ? h('a', { href: next[0] }, next[1]) : null);
+  }
+
+  /* ---------- Start ---------- */
+  function home() {
+    var rows = {};
+    SOPS.forEach(function (s) {
+      var meta, warn = false;
+      if (s.check) meta = sopDone(s) + ' von ' + leaves(s).length + ' heute';
+      else meta = 'Regeln';
+      rows[s.n] = h('a', { class: 'row', href: hrefFor(s.n) },
+        h('span', { class: 'no' }, sopNo(s.n)), h('span', { class: 'ttl' }, s.title), h('span', { class: 'meta' }, meta));
+    });
+    var locked = configured && dbState !== 'live';
+    var miss = locked ? 0 : teamMissing();
+    rows[7] = h('a', { class: 'row', href: '#einarbeitung' },
+      h('span', { class: 'no' }, 'Bogen'), h('span', { class: 'ttl' }, 'Einarbeitungsbogen'),
+      h('span', { class: 'meta' + (miss ? ' warn' : '') }, locked ? 'Mit PIN öffnen' : miss ? miss + ' Angaben fehlen' : 'Alles ausgefüllt'));
+
+    var start = h('div', { class: 'start' },
+      h('div', { class: 'start-row' }, h('span', { class: 'when' }, 'Tag 1'),
+        h('div', null,
+          h('p', null, 'Kurze, klare Abläufe, die dir das Haus zeigen.'),
+          h('div', { class: 'links' }, link('#sheet-1', 'SOP 01 Ambiente Check'), link('#sheet-6', 'SOP 06 Wäsche'), link('#sheet-5', 'SOP 05 Ware annehmen')))),
+      h('div', { class: 'start-row' }, h('span', { class: 'when' }, 'Woche 1'),
+        h('div', null,
+          h('p', null, 'Die interne Einarbeitung durchlaufen, von Kasse bis Kaffeemaschine. Lege fest, wer dich einarbeitet. Danach Termine organisieren und die Shopify Bestellungen übernehmen.'),
+          h('div', { class: 'links' }, link('#einarbeitung', 'Einarbeitungsbogen'), link('#sheet-3', 'SOP 03 Termine'), link('#sheet-2', 'SOP 02 Shopify')))),
+      h('div', { class: 'start-row' }, h('span', { class: 'when' }, 'Ab Woche 2'),
+        h('div', null,
+          h('p', null, 'Termine für die externen Schulungen festlegen. Die Bestellungen übernimmst du, sobald dir die Verantwortung dafür übertragen wird.'),
+          h('div', { class: 'links' }, link('#einarbeitung', 'Schulungstermine'), link('#sheet-4', 'SOP 04 Bestellungen')))));
+
+    var kids = [
+      h('h1', null, 'Sheet of Motivation'),
+      h('p', { class: 'lead' }, 'Die Standard Arbeitsanweisungen (SOPs) von Noahkosmetik. Haken in den Checklisten gelten für heute und starten morgen neu. Der Einarbeitungsbogen bleibt gespeichert.'),
+      h('p', { class: 'team' }, h('b', null, 'Team '), TEAM.join(', ')),
+      h('h2', { class: 'sec' }, 'Neu im Team? Diese Reihenfolge hilft'),
+      start,
+      h('p', { class: 'hint' }, 'Vorschlag. Passe die Reihenfolge an euer Haus an.')
+    ];
+    GROUPS.forEach(function (g) {
+      kids.push(h('h2', { class: 'group-title' }, g.title));
+      kids.push(h('div', { class: 'list' }, g.ids.map(function (id) { return rows[id]; })));
+    });
+    return h('main', null, kids);
+  }
+
+  /* ---------- SOP ---------- */
+  function toggleCheck(key) {
+    if (checks[key]) delete checks[key]; else checks[key] = true;
+    lsSet(CHECK_KEY, JSON.stringify(checks));
+    lastFocus = key;
+    render();
+  }
+  function checkItem(n, id, text) {
+    var key = n + ':' + id;
+    var on = !!checks[key];
+    return h('button', { type: 'button', class: 'chk', role: 'checkbox', 'aria-checked': on ? 'true' : 'false', 'data-id': key, onclick: function () { toggleCheck(key); } },
+      h('span', { class: 'box' }, checkIcon()),
+      h('span', { class: 'txt' }, rich(text)));
+  }
+
+  function sopView(n) {
+    var s = SOPS[n - 1];
+    var rows = [['Zweck', s.zweck], ['Wann', s.wann], ['Systeme und Material', s.systeme], ['Verantwortlich', s.wer], ['Stand', 'Version 1, ' + STAND]];
+    var kids = [
+      h('p', { class: 'eyebrow' }, sopNo(n) + (s.check ? ' · Checkliste' : ' · Regeln')),
+      h('h1', null, s.title),
+      h('dl', { class: 'meta-block' }, rows.map(function (r) { return h('div', { class: 'mrow' }, h('dt', null, r[0]), h('dd', null, rich(r[1]))); })),
+      h('h2', { class: 'sec' }, s.check ? 'Ablauf' : 'Regeln')
+    ];
+
+    if (s.check) {
+      var total = leaves(s).length, done = sopDone(s);
+      kids.push(h('div', { class: 'progress' },
+        h('span', null, done + ' von ' + total + ' heute'),
+        h('div', { class: 'bar', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': String(total), 'aria-valuenow': String(done) }, h('i', { style: 'width:' + Math.round(done / total * 100) + '%' })),
+        h('button', { type: 'button', class: 'reset', onclick: function () { checks = {}; lsSet(CHECK_KEY, '{}'); lastFocus = null; render(); } }, 'Neu starten')));
+    }
+
+    kids.push(h('ol', { class: 'steps' }, s.steps.map(function (st0, i) {
+      var body;
+      if (s.check) {
+        if (st0.subs) {
+          body = h('div', { class: 'body' }, h('div', { class: 'head' }, st0.t),
+            h('ul', { class: 'subs' }, st0.subs.map(function (t, j) { return h('li', null, checkItem(n, i + '.' + j, t)); })));
+        } else body = h('div', { class: 'body' }, checkItem(n, String(i), st0.t));
+      } else {
+        body = h('div', { class: 'body' }, h('div', { class: 'read' }, rich(st0.t)),
+          st0.subs ? h('ul', { class: 'bul' }, st0.subs.map(function (t) { return h('li', null, rich(t)); })) : null);
+      }
+      return h('li', { class: 'step' }, h('span', { class: 'n' }, String(i + 1)), body);
+    })));
+
+    if (s.siehe) {
+      var parts = ['Siehe auch '];
+      s.siehe.forEach(function (x, i) { if (i) parts.push(', '); parts.push(link(hrefFor(x.n), x.text)); });
+      kids.push(h('p', { class: 'see' }, parts));
+    }
+    kids.push(pager(
+      n > 1 ? [hrefFor(n - 1), 'Zurück zu ' + sopNo(n - 1)] : ['#', 'Zur Übersicht'],
+      n < 6 ? [hrefFor(n + 1), 'Weiter zu ' + sopNo(n + 1)] : ['#einarbeitung', 'Weiter zum Einarbeitungsbogen']));
+    return h('main', null, kids);
+  }
+
+  /* ---------- Einarbeitung ---------- */
+  function statusLine() {
+    if (!configured) return h('p', { class: 'status' }, h('b', null, 'Nur auf diesem Gerät gespeichert. '), 'Die Verbindung zum Team Speicher ist noch nicht eingerichtet.');
+    var lockBtn = h('button', { type: 'button', class: 'linkbtn', onclick: function () { pinError = ''; lock(); } }, 'Sperren');
+    if (stale) return h('p', { class: 'status' }, h('b', null, 'Keine Verbindung. '), 'Der Stand kann veraltet sein. ', lockBtn);
+    return h('p', { class: 'status' }, h('b', null, 'Gemeinsamer Stand. '), 'Änderungen erscheinen nach wenigen Sekunden bei allen. ', lockBtn);
+  }
+  function gateView() {
+    var kids = [h('p', { class: 'eyebrow' }, 'Einarbeitungsbogen'), h('h1', null, 'Nur für das Team')];
+    if (dbState === 'loading') {
+      kids.push(h('p', { class: 'lead' }, 'Verbinde mit dem Team Speicher.'));
+      return h('main', null, kids);
+    }
+    if (dbState === 'error') {
+      kids.push(h('p', { class: 'lead' }, 'Der Team Speicher ist gerade nicht erreichbar. Prüfe die Verbindung und versuche es erneut.'));
+      kids.push(h('button', { type: 'button', class: 'btn', style: 'margin-top:16px', onclick: function () { unlock(pin, !!lsGet('nk-pin')); } }, 'Erneut versuchen'));
+      return h('main', null, kids);
+    }
+    kids.push(h('p', { class: 'lead' }, 'Gib den PIN ein, den dir das Team gegeben hat.'));
+    var input = h('input', { type: 'password', id: 'pin', autocomplete: 'current-password', autocapitalize: 'off', spellcheck: 'false', placeholder: 'PIN' });
+    var remember = h('input', { type: 'checkbox', id: 'remember', checked: true });
+    kids.push(h('form', { class: 'pin-form', onsubmit: function (e) {
+      e.preventDefault();
+      var v = input.value.trim();
+      if (v) unlock(v, remember.checked);
+    } },
+      h('label', { for: 'pin' }, 'PIN fürs Team'),
+      input,
+      h('label', { class: 'remember', for: 'remember' }, remember, 'Auf diesem Gerät merken'),
+      h('button', { type: 'submit', class: 'btn' }, 'Öffnen'),
+      pinError ? h('p', { class: 'pin-error', role: 'alert' }, pinError) : null));
+    return h('main', null, kids);
+  }
+  function ruleBox() {
+    return h('p', { class: 'rule' }, h('b', null, 'Regel für externe Schulungen. '),
+      'Hat noch keine offizielle Schulung der Firma stattgefunden, legst du ein Datum fest. Ohne Datum steht die Schulung als "Termin fehlt" auf der Liste. Bei der internen Einarbeitung trägst du immer ein, durch wen sie erfolgt.');
+  }
+  function sym(cls) { return h('span', { class: 'sym ' + cls }, cls === 'done' ? checkIcon() : cls === 'miss' || cls === 'late' ? '!' : ''); }
+
+  function einView() {
+    var head = h('tr', null, h('th', { class: 'item', scope: 'col' }, 'Thema'),
+      TEAM.map(function (name, i) {
+        return h('th', { scope: 'col' }, h('a', { href: '#einarbeitung-' + KEYS[i] }, name), h('small', null, counts(KEYS[i]).done + '/' + EIN_ITEMS.length));
+      }));
+    var body = [];
+    EIN_GROUPS.forEach(function (g) {
+      body.push(h('tr', { class: 'group' }, h('td', { colspan: String(TEAM.length + 1) }, g.title)));
+      g.items.forEach(function (it) {
+        body.push(h('tr', null, h('td', { class: 'item' }, it.label),
+          KEYS.map(function (key, i) {
+            var s = st(key, it), cls, lab;
+            if (s.s === 'done') { cls = 'done'; lab = 'erledigt am ' + fmtLong(s.d); }
+            else if (s.s === 'planned' && s.d) { cls = s.overdue ? 'late' : 'plan'; lab = (s.overdue ? 'Termin vorbei, war geplant für ' : 'geplant für ') + fmtLong(s.d); }
+            else if (it.ext) { cls = 'miss'; lab = 'Termin fehlt'; }
+            else if (s.noWho) { cls = 'miss'; lab = 'Durch wen fehlt'; }
+            else { cls = 'open'; lab = 'offen'; }
+            return h('td', null, h('a', { class: 'mcell', href: '#einarbeitung-' + key, 'aria-label': TEAM[i] + ', ' + it.label + ', ' + lab },
+              sym(cls), h('span', { class: 'date' }, s.d && s.s !== 'none' && cls !== 'miss' && cls !== 'open' ? fmt(s.d) : '')));
+          })));
+      });
+    });
+
+    var sums = KEYS.map(function (key, i) {
+      var c = counts(key);
+      return h('li', null, h('a', { href: '#einarbeitung-' + key },
+        h('b', null, TEAM[i]),
+        h('span', { class: 'num' }, c.done + ' erledigt'),
+        h('span', { class: 'num' }, c.planned + ' geplant'),
+        c.missing ? h('span', { class: 'gap' }, c.missing + ' ohne Termin') : h('span', { class: 'num' }, 'alles terminiert'),
+        c.noWho ? h('span', { class: 'gap' }, c.noWho + ' ohne Person') : null,
+        c.overdue ? h('span', { class: 'gap' }, c.overdue + ' Termin vorbei') : null));
+    });
+
+    return h('main', null,
+      h('p', { class: 'eyebrow' }, 'Einarbeitungsbogen'),
+      h('h1', null, 'Einarbeitung des Teams'),
+      statusLine(),
+      ruleBox(),
+      h('div', { class: 'scroll' }, h('table', { class: 'grid' }, h('thead', null, head), h('tbody', null, body))),
+      h('div', { class: 'legend' },
+        h('span', null, sym('done'), 'Erledigt'),
+        h('span', null, sym('plan'), 'Geplant'),
+        h('span', null, sym('miss'), 'Angabe fehlt'),
+        h('span', null, sym('late'), 'Termin vorbei'),
+        h('span', null, sym('open'), 'Offen')),
+      h('h2', { class: 'sec' }, 'Pro Person'),
+      h('ul', { class: 'sums' }, sums),
+      pager(['#sheet-6', 'Zurück zu SOP 06'], null));
+  }
+
+  function setStatus(key, id, s) {
+    var d = prog[key] || (prog[key] = {});
+    var cur = d[id];
+    var by = cur && cur.by ? cur.by : '';
+    if (s === 'none') { if (by) d[id] = { s: 'none', d: '', by: by }; else delete d[id]; }
+    else if (s === 'planned') d[id] = { s: 'planned', d: cur && cur.s === 'planned' ? cur.d : '', by: by };
+    else d[id] = { s: 'done', d: cur && cur.s === 'done' && cur.d ? cur.d : today(), by: by };
+    lastFocus = key + ':' + id + ':' + s;
+    render();
+    save(key, id);
+  }
+  function setDate(key, id, v) {
+    var rec = (prog[key] || {})[id];
+    if (!rec) return;
+    if (!v && rec.s === 'done') v = today();
+    rec.d = v;
+    lastFocus = key + ':' + id + ':date';
+    render();
+    save(key, id);
+  }
+  function setBy(key, id, v) {
+    var d = prog[key] || (prog[key] = {});
+    var rec = d[id];
+    v = String(v || '').trim();
+    if (!rec) { if (v) d[id] = { s: 'none', d: '', by: v }; }
+    else { rec.by = v; if (rec.s === 'none' && !v) delete d[id]; }
+    save(key, id);
+  }
+
+  function flagsFor(s) {
+    var f = [];
+    if (s.missing) f.push(h('span', { class: 'gap' }, 'Termin fehlt'));
+    if (s.noWho) f.push(h('span', { class: 'gap' }, 'Durch wen fehlt'));
+    if (s.overdue) f.push(h('span', { class: 'gap' }, 'Termin vorbei, bitte Status prüfen'));
+    return f;
+  }
+
+  function itemRow(key, it) {
+    var s = st(key, it);
+    var flagBox = h('span', { class: 'flags' }, flagsFor(s));
+    var seg = h('div', { class: 'seg', role: 'group', 'aria-label': 'Status ' + it.label },
+      [['none', 'Offen'], ['planned', 'Geplant'], ['done', 'Erledigt']].map(function (o) {
+        return h('button', { type: 'button', 'aria-pressed': s.s === o[0] ? 'true' : 'false', 'data-id': key + ':' + it.id + ':' + o[0], onclick: function () { setStatus(key, it.id, o[0]); } }, o[1]);
+      }));
+    var inputId = 'd-' + key + '-' + it.id;
+    var dateRow = s.s === 'none' ? null : h('label', { class: 'dateline', for: inputId },
+      h('span', null, s.s === 'done' ? 'Schulung am' : 'Geplant für'),
+      h('input', { type: 'date', id: inputId, value: s.d, 'data-id': key + ':' + it.id + ':date', onchange: function (e) { setDate(key, it.id, e.target.value); } }));
+    var li;
+    var whoRow = null;
+    if (it.who) {
+      var whoId = 'w-' + key + '-' + it.id;
+      whoRow = h('label', { class: 'dateline', for: whoId },
+        h('span', null, 'Eingearbeitet durch'),
+        h('input', { type: 'text', id: whoId, list: 'names', value: s.by, maxlength: '40', autocomplete: 'off', placeholder: 'Name', 'data-id': key + ':' + it.id + ':by',
+          onchange: function (e) {
+            setBy(key, it.id, e.target.value);
+            var s2 = st(key, it);
+            flagBox.replaceChildren.apply(flagBox, flagsFor(s2));
+            li.classList.toggle('warn', !!(s2.missing || s2.overdue || s2.noWho));
+          } }));
+    }
+    li = h('li', { class: 'einrow' + (s.missing || s.overdue || s.noWho ? ' warn' : '') },
+      h('div', { class: 'einhead' }, h('span', { class: 'einlabel' }, it.label), flagBox), seg, whoRow, dateRow);
+    return li;
+  }
+
+  function personView(key) {
+    var i = KEYS.indexOf(key), name = TEAM[i], c = counts(key);
+    var pills = [h('a', { href: '#einarbeitung' }, 'Team')].concat(KEYS.map(function (k, j) {
+      return h('a', { href: '#einarbeitung-' + k, 'aria-current': k === key ? 'page' : null }, TEAM[j]);
+    }));
+    var kids = [
+      h('p', { class: 'eyebrow' }, 'Einarbeitungsbogen'),
+      h('h1', null, name),
+      h('nav', { class: 'pills', 'aria-label': 'Person wählen' }, pills),
+      statusLine(),
+      h('p', { class: 'status' }, h('b', null, c.done + ' von ' + c.total + ' erledigt. '), c.planned + ' geplant' + (c.missing ? ', ' + c.missing + ' ohne Termin' : '') + (c.noWho ? ', ' + c.noWho + ' ohne Person' : '') + '.'),
+      h('datalist', { id: 'names' }, TEAM.map(function (n) { return h('option', { value: n }); })),
+      ruleBox()
+    ];
+    EIN_GROUPS.forEach(function (g) {
+      kids.push(h('h2', { class: 'sec' }, g.title));
+      kids.push(h('p', { class: 'hint', style: 'margin:-6px 0 12px' }, g.note));
+      kids.push(h('ul', { class: 'eins' }, g.items.map(function (it) { return itemRow(key, it); })));
+    });
+    kids.push(pager(['#einarbeitung', 'Zur Übersicht'], null));
+    return h('main', null, kids);
+  }
+
+  /* ---------- Rendern ---------- */
+  var lastFocus = null;
+  var pendingRender = false;
+  function softRender() {
+    var a = document.activeElement;
+    if (a && a.tagName === 'INPUT' && a.dataset.dirty === '1') { pendingRender = true; return; }
+    render();
+  }
+  document.addEventListener('input', function (e) { if (e.target && e.target.tagName === 'INPUT') e.target.dataset.dirty = '1'; });
+  document.addEventListener('change', function (e) { if (e.target && e.target.dataset) delete e.target.dataset.dirty; });
+  document.addEventListener('focusout', function () {
+    if (!pendingRender) return;
+    setTimeout(function () {
+      var a = document.activeElement;
+      if (pendingRender && !(a && a.tagName === 'INPUT' && a.dataset.dirty === '1')) render();
+    }, 600);
+  });
+  function render() {
+    pendingRender = false;
+    var y = window.scrollY;
+    var r = route();
+    var app = document.getElementById('app');
+    var gated = configured && dbState !== 'live' && (r.v === 'ein' || r.v === 'person');
+    app.replaceChildren(header(r), gated ? gateView() : r.v === 'home' ? home() : r.v === 'sop' ? sopView(r.n) : r.v === 'ein' ? einView() : personView(r.key));
+    window.scrollTo(0, y);
+    if (gated && dbState === 'locked') { var pe = document.getElementById('pin'); if (pe) pe.focus({ preventScroll: true }); }
+    if (lastFocus) {
+      var el = app.querySelector('[data-id="' + lastFocus + '"]');
+      if (el) el.focus({ preventScroll: true });
+    }
+  }
+  window.addEventListener('hashchange', function () { lastFocus = null; render(); window.scrollTo(0, 0); });
+
+  render();
+  if (configured) { var savedPin = lsGet('nk-pin'); if (savedPin) unlock(savedPin, true); }
+})();
+if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+  navigator.serviceWorker.register('sw.js').catch(function () {});
+}
+</script>
+</body>
+</html>
